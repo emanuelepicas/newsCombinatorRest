@@ -1,8 +1,11 @@
 package com.sourcesense.emanuelepicas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NyTimesArticleContainer {
+	
 
-	News[] results;
+	private News[] results;
 
 	public News[] getResults() {
 		return results;
@@ -12,4 +15,5 @@ public class NyTimesArticleContainer {
 		this.results = results;
 	}
 
+	
 }

@@ -11,20 +11,33 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.sourcesense.emanuelepicas.model.News;
-import com.sourcesense.emanuelepicas.service.NewsService;
+import com.sourcesense.emanuelepicas.service.HackerNewsService;
+import com.sourcesense.emanuelepicas.service.AggregatorNewsService;
+import com.sourcesense.emanuelepicas.service.NyTimesService;
 
 @RestController
 public class NewsController {
 
 	@Autowired
-	NewsService newsService;
+	AggregatorNewsService newsService;
+	
+	@Autowired
+	HackerNewsService hackNewsService;
+	
+	@Autowired
+	NyTimesService nyTimesService;
+	
+	public enum NewsType {
+		hackerNews,nyTimesNews;
+		
+	}
 	
 
 	@GetMapping(value = "/news")
 	@ResponseBody
 	public List<News> allNewsOrdered() throws JsonParseException, JsonMappingException, MalformedURLException, IOException {
 
-		return newsService.printAllNews();
+		return newsService.allArticlesOfTheSources();
 
 	}
 
@@ -33,12 +46,12 @@ public class NewsController {
 	@GetMapping(value = "/news/{source}")
 	@ResponseBody
 	public List<News> printSourceNews(@PathVariable String source) throws JsonParseException, JsonMappingException, MalformedURLException, IOException{
-		if(source.equals("hackerNews")) {
-			return  newsService.printAllHackerNews();
+		if(source.equals(NewsType.hackerNews.toString())) {
+			return  hackNewsService.allOfTheArticlesOfHackerNews();
 			}
-		if(source.equals("nyTimesNews")) {
+		if(source.equals(NewsType.nyTimesNews.toString())) {
 			
-			return  newsService.printAllNyTimesNews();
+			return  nyTimesService.allArticlesOfNyTimes();
 			
 		}
 		return null;
