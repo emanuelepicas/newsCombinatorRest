@@ -1,10 +1,6 @@
 package com.sourcesense.emanuelepicas.model;
 
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Date;
-
 
 public class HackerNews extends News {
 
@@ -13,16 +9,14 @@ public class HackerNews extends News {
 	private String title;
 
 	private String url;
-	
-
 
 	public Date getTime() {
 		return time;
 	}
 
 	public void setTime(Long time) {
-		Long newTime = (long) (time + 1546290648000.00);
-		Date timeConverted=new java.util.Date(((long)time*1000));
+		// Long newTime = (long) (time + 1546290648000.00);
+		Date timeConverted = new java.util.Date(((long) time * 1000));
 		this.time = timeConverted;
 	}
 
@@ -34,7 +28,6 @@ public class HackerNews extends News {
 		this.title = title;
 	}
 
-
 	public String getUrl() {
 		return url;
 	}
@@ -43,10 +36,4 @@ public class HackerNews extends News {
 		this.url = url;
 	}
 
-
-	
-
-
-
-	
 }

@@ -2,9 +2,10 @@ package com.sourcesense.emanuelepicas.service;
 
 import java.util.Comparator;
 
-import com.sourcesense.emanuelepicas.model.HackerNews;
-import com.sourcesense.emanuelepicas.model.News;
+import org.springframework.stereotype.Component;
 
+import com.sourcesense.emanuelepicas.model.News;
+@Component
 public class CompareDateNews implements Comparator<News> {
 
 	@Override

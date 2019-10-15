@@ -1,6 +1,5 @@
 package com.sourcesense.emanuelepicas.model;
 
-import java.util.Comparator;
 import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
