@@ -3,6 +3,7 @@ package com.sourcesense.emanuelepicas.service;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,12 @@ public class HackerNewsService {
 	HackerNewsRepository hackerNewsRepository;
 	
 	
-	public List<News> allOfTheArticlesOfHackerNews() throws JsonParseException, JsonMappingException, MalformedURLException, IOException{
+	public List<News> allOfTheArticlesOfHackerNews() throws JsonParseException, JsonMappingException, MalformedURLException, IOException, InterruptedException, ExecutionException{
 		return hackerNewsRepository.printNews();
+	}
+	
+	public List<News> allOfTheArticlesOfHackerNewsWithWebClient() throws JsonParseException, JsonMappingException, MalformedURLException, IOException, InterruptedException, ExecutionException{
+		return hackerNewsRepository.printNewsWithWebClient();
 	}
 
 }
