@@ -2,24 +2,31 @@ package com.sourcesense.emanuelepicas.model;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class HackerNews extends News {
+	@Id
+	public Integer id;
 
 	private Date time;
+	
 
 	private String title;
 
-	private String url;
 
-	public Date getTime() {
-		return time;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setTime(Long time) {
-		// Long newTime = (long) (time + 1546290648000.00);
 		Date timeConverted = new java.util.Date(((long) time * 1000));
 		this.time = timeConverted;
 	}
@@ -32,12 +39,14 @@ public class HackerNews extends News {
 		this.title = title;
 	}
 
-	public String getUrl() {
-		return url;
+	@Override
+	public Date getData() {
+		return time;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	@Override
+	public String getSource() {
+		return "Hacker News";
 	}
 
 }

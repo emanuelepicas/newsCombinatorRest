@@ -2,27 +2,14 @@ package com.sourcesense.emanuelepicas.model;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-@JsonDeserialize(as = HackerNews.class)
 
-
-public abstract class News  {
-
-	private String title;
+public abstract class News {
 
 	private String url;
+	
+	private String source;
 
-	private Date created_date;
-
-	private Date time;
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	public abstract Date getData();
 
 	public String getUrl() {
 		return url;
@@ -32,20 +19,12 @@ public abstract class News  {
 		this.url = url;
 	}
 
-	public Date getCreated_date() {
-		return created_date;
+	public String getSource() {
+		return source;
 	}
 
-	public void setCreated_date(Date created_date) {
-		this.created_date = created_date;
-	}
-
-	public Date getTime() {
-		return time;
-	}
-
-	public void setTime(Date time) {
-		this.time = time;
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 }

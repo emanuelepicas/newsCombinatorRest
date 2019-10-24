@@ -1,6 +1,8 @@
 package com.sourcesense.emanuelepicas.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -32,7 +34,14 @@ public class NewsController {
 	@ResponseBody
 	public List<News> allNewsOrdered() throws IOException, InterruptedException, ExecutionException {
 
-		return newsService.allArticlesOfTheSources();
+		return newsService.allArticles();
+
+	}
+	@GetMapping(value = "/news/getFromDb")
+	@ResponseBody
+	public List<News> allNewsFromDb() {
+
+		return newsService.getFromDb();
 
 	}
 
@@ -42,17 +51,19 @@ public class NewsController {
 	@ResponseBody
 	public List<News> printSourceNews(@PathVariable String source) throws  IOException, InterruptedException, ExecutionException{
 		if(source.equals(NewsType.hackerNews.toString())) {
-			return  hackNewsService.allOfTheArticlesOfHackerNews();
+			
+			
+			return  new ArrayList<>(hackNewsService.allArticles());
 			}
-		if(source.equals("webClient")) {
-			return hackNewsService.allOfTheArticlesOfHackerNewsWithWebClient();
+		if(source.equals(NewsType.webClient.toString())) {
+			return new ArrayList<>(hackNewsService.allOfTheArticlesOfHackerNewsWithWebClient());
 		}
 		if(source.equals(NewsType.nyTimesNews.toString())) {
 			
-			return  nyTimesService.allArticlesOfNyTimes();
+			return  new ArrayList<>(nyTimesService.allArticles());
 			
 		}
-		return null;
+		return Collections.emptyList();
 		
 	
 

@@ -1,19 +1,18 @@
 package com.sourcesense.emanuelepicas.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NyTimesArticleContainer {
-	
 
-	private News[] results;
+	private NyTimesArticle[] results;
 
-	public News[] getResults() {
+	public NyTimesArticle[] getResults() {
 		return results;
 	}
 
-	public void setResults(News[] results) {
+	public void setResults(NyTimesArticle[] results) {
 		this.results = results;
 	}
 
-	
 }
