@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.sourcesense.emanuelepicas.model.HackerNews;
 import com.sourcesense.emanuelepicas.model.News;
+import com.sourcesense.emanuelepicas.repositories.HackerNewsRepository;
 import com.sourcesense.emanuelepicas.repositories.NewsRepository;
 
 import reactor.core.publisher.Flux;
@@ -28,22 +30,25 @@ public class HackerNewsService implements NewsServiceInteface {
 	private static final Logger logger = LoggerFactory.getLogger(HackerNewsService.class);
 
 	@Value("${UrlofHakerNewsPart1}")
-	String hackerNewsUrlpart1;
+	private String hackerNewsUrlpart1;
 
 	@Value("${UrlofHackerNewsPart2}")
-	String hackerNewsUrlpart2;
+	private String hackerNewsUrlpart2;
 
 	@Value("${allIdUrlOfHackerNews}")
-	String hackerNews;
+	private String hackerNews;
 
 	@Value("${localHost}")
-	String localHost;
+	private String localHost;
 
 	@Value("${idHackerNews}")
-	String idHackerNews;
+	private String idHackerNews;
 
 	@Autowired
-	NewsRepository newsRepository;
+	private NewsRepository newsRepository;
+
+	@Autowired
+	private HackerNewsRepository hackerNewsRepository;
 
 	@Override
 	public List<News> allArticles() throws IOException, InterruptedException, ExecutionException {
@@ -83,16 +88,26 @@ public class HackerNewsService implements NewsServiceInteface {
 	public List<HackerNews> allTheArticlesOfASource() throws InterruptedException, ExecutionException {
 		List<Integer> list = readAllId();
 		List<HackerNews> allHackerNewsList;
+
 		ForkJoinPool customThreadPool = new ForkJoinPool(20);
 
-		RestTemplate restTemplate = new RestTemplate();
+		allHackerNewsList = customThreadPool.submit(() -> list.parallelStream().map(p ->
 
-		allHackerNewsList = customThreadPool.submit(() -> list.parallelStream().map(p -> (
-
-		restTemplate.getForObject(hackerNewsUrlpart1 + p + hackerNewsUrlpart2, HackerNews.class)))
-				.collect(Collectors.toList())).get();
+		controlfromDb(p)).collect(Collectors.toList())).get();
 
 		return allHackerNewsList;
+	}
+
+	public HackerNews controlfromDb(Integer p) {
+		RestTemplate restTemplate = new RestTemplate();
+
+		Optional<HackerNews> value = hackerNewsRepository.findById(p);
+
+		if (value.isPresent()) {
+			return value.get();
+		} else {
+			return restTemplate.getForObject(hackerNewsUrlpart1 + p + hackerNewsUrlpart2, HackerNews.class);
+		}
 	}
 
 	// WEB CLIENT

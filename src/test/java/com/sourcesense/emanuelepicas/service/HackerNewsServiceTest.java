@@ -1,4 +1,4 @@
-package com.sourcesense.emanuelepicas.repository;
+package com.sourcesense.emanuelepicas.service;
 
 import static org.junit.Assert.*;
 
@@ -14,26 +14,25 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.sourcesense.emanuelepicas.model.News;
 @RunWith(SpringRunner.class)
-@WebMvcTest(HackerNewsRepository.class)
-public class HackerNewsRepositoryTest {
-	
-	
-    @MockBean
-	private HackerNewsRepository hackerNewsRepository;
-    
-    @Before
+@WebMvcTest(HackerNewsService.class)
+public class HackerNewsServiceTest {
+
+	@MockBean
+	private HackerNewsService hackerNewsService;
+
+	@Before
 	public void init() throws IOException, InterruptedException, ExecutionException {
-		Mockito.when(hackerNewsRepository.printNews()).thenReturn(new ArrayList<News>());
+		Mockito.when(hackerNewsService.printNews()).thenReturn(new ArrayList<>());
 	}
 
-
 	@Test
-	public void NewsEmpty() throws JsonParseException, JsonMappingException, MalformedURLException, IOException, InterruptedException, ExecutionException {
-		assertTrue(hackerNewsRepository.printNews().isEmpty());
+	public void NewsEmpty() throws JsonParseException, JsonMappingException, MalformedURLException, IOException,
+			InterruptedException, ExecutionException {
+		assertTrue(hackerNewsService.printNews().isEmpty());
 	}
 
 }

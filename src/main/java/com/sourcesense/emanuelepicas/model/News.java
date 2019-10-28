@@ -3,7 +3,9 @@ package com.sourcesense.emanuelepicas.model;
 import java.util.Date;
 
 
+
 public abstract class News {
+	
 
 	private String url;
 	
